@@ -1,3 +1,5 @@
+const i18n = require("../localization/i18n.config");
+
 // Contains a whitelist of languages for our app
 const whitelistMap = {
   af: "Afrikaans",
@@ -54,9 +56,12 @@ var Whitelist = (function() {
   let keys = Object.keys(whitelistMap);
   let clickFunction = function(channel, lng) {
     return function(menuItem, browserWindow, event) {
-      browserWindow.webContents.send(channel, {
-        lng
-      });
+      i18n.changeLanguage(lng, () => {
+        console.log(i18n.t('Hello'), 'hello from menu')
+        browserWindow.webContents.send(channel, {
+          lng
+        });
+      })
     };
   };
 
